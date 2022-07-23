@@ -166,6 +166,33 @@ func ovhScan(c *gin.Context) {
 	})
 }
 
+// @ID tempophoneScan
+// @Tags Numbers
+// @Summary Perform a scan using Tempophone's API.
+// @Produce  json
+// @Success 200 {object} ScanResultResponse{result=remote.TempophoneScannerResponse}
+// @Success 400 {object} JSONResponse
+// @Router /numbers/{number}/scan/tempophone [get]
+// @Param number path string true "Input phone number" validate(required)
+func tempophoneScan(c *gin.Context) {
+	num, err := number.NewNumber(c.Param("number"))
+	if err != nil {
+		handleError(c, errors.NewBadRequest(err))
+		return
+	}
+
+	result, err := remote.NewTempophoneScanner().Scan(*num)
+	if err != nil {
+		handleError(c, errors.NewInternalError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, ScanResultResponse{
+		JSONResponse: JSONResponse{Success: true},
+		Result:       result,
+	})
+}
+
 // @ID healthCheck
 // @Tags General
 // @Summary Check if service is healthy.

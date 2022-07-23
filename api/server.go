@@ -69,7 +69,8 @@ func Serve(router *gin.Engine, disableClient bool) *gin.Engine {
 		GET("/numbers/:number/scan/local", ValidateScanURL, localScan).
 		GET("/numbers/:number/scan/numverify", ValidateScanURL, numverifyScan).
 		GET("/numbers/:number/scan/googlesearch", ValidateScanURL, googleSearchScan).
-		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan)
+		GET("/numbers/:number/scan/ovh", ValidateScanURL, ovhScan).
+		GET("/numbers/:number/scan/tempophone", ValidateScanURL, tempophoneScan)
 
 	if !disableClient {
 		registerClientRoute(router)

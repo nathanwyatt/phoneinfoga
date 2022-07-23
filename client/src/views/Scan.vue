@@ -44,6 +44,7 @@
     <NumverifyScan :scan="scanEvent" />
     <GoogleSearch :scan="scanEvent" />
     <OVHScan :scan="scanEvent" />
+    <CommonScanner id="tempophone" name="Tempophone API" :scan="scanEvent" />
   </div>
 </template>
 
@@ -56,6 +57,7 @@ import NumverifyScan from "../components/NumverifyScan.vue";
 import GoogleSearch from "../components/GoogleSearch.vue";
 import OVHScan from "../components/OVHScan.vue";
 import { AxiosResponse } from "axios";
+import CommonScanner from "@/components/CommonScanner.vue";
 
 interface Data {
   loading: boolean;
@@ -70,7 +72,7 @@ export type ScanResponse<T> = AxiosResponse<{
 }>;
 
 export default Vue.extend({
-  components: { LocalScan, GoogleSearch, NumverifyScan, OVHScan },
+  components: {CommonScanner, LocalScan, GoogleSearch, NumverifyScan, OVHScan },
   computed: {
     ...mapState(["number"]),
     ...mapMutations(["pushError"]),

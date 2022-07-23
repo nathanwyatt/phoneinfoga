@@ -264,6 +264,53 @@ var doc = `{
                 }
             }
         },
+        "/numbers/{number}/scan/tempophone": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Numbers"
+                ],
+                "summary": "Perform a scan using Tempophone's API.",
+                "operationId": "tempophoneScan",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Input phone number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/api.ScanResultResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/remote.TempophoneScannerResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/api.JSONResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/numbers/{number}/validate": {
             "get": {
                 "produces": [
@@ -490,6 +537,20 @@ var doc = `{
                 },
                 "zip_code": {
                     "type": "string"
+                }
+            }
+        },
+        "remote.TempophoneScannerResponse": {
+            "type": "object",
+            "properties": {
+                "Id": {
+                    "type": "integer"
+                },
+                "event_url": {
+                    "type": "string"
+                },
+                "found": {
+                    "type": "boolean"
                 }
             }
         }

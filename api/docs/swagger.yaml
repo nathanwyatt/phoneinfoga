@@ -125,6 +125,15 @@ definitions:
       zip_code:
         type: string
     type: object
+  remote.TempophoneScannerResponse:
+    properties:
+      Id:
+        type: integer
+      event_url:
+        type: string
+      found:
+        type: boolean
+    type: object
 host: demo.phoneinfoga.crvx.fr
 info:
   contact: {}
@@ -277,6 +286,34 @@ paths:
           schema:
             $ref: '#/definitions/api.JSONResponse'
       summary: Perform a scan using OVH's API.
+      tags:
+      - Numbers
+  /numbers/{number}/scan/tempophone:
+    get:
+      operationId: tempophoneScan
+      parameters:
+      - description: Input phone number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/api.ScanResultResponse'
+            - properties:
+                result:
+                  $ref: '#/definitions/remote.TempophoneScannerResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.JSONResponse'
+      summary: Perform a scan using Tempophone's API.
       tags:
       - Numbers
   /numbers/{number}/validate:
