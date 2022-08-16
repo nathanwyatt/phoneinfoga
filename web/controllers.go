@@ -1,12 +1,12 @@
-package api
+package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sundowndev/phoneinfoga/v2/api/errors"
 	"github.com/sundowndev/phoneinfoga/v2/build"
 	"github.com/sundowndev/phoneinfoga/v2/lib/number"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote"
 	"github.com/sundowndev/phoneinfoga/v2/lib/remote/suppliers"
+	"github.com/sundowndev/phoneinfoga/v2/web/errors"
 	"net/http"
 )
 
@@ -73,7 +73,7 @@ func localScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewLocalScanner().Scan(num)
+	result, err := remote.NewLocalScanner().Scan(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -100,7 +100,7 @@ func numverifyScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Scan(num)
+	result, err := remote.NewNumverifyScanner(suppliers.NewNumverifySupplier()).Scan(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -127,7 +127,7 @@ func googleSearchScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewGoogleSearchScanner().Scan(num)
+	result, err := remote.NewGoogleSearchScanner().Scan(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
@@ -154,7 +154,7 @@ func ovhScan(c *gin.Context) {
 		return
 	}
 
-	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Scan(num)
+	result, err := remote.NewOVHScanner(suppliers.NewOVHSupplier()).Scan(*num)
 	if err != nil {
 		handleError(c, errors.NewInternalError(err))
 		return
